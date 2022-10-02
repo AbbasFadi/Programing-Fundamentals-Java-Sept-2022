@@ -4,26 +4,28 @@ import java.util.Scanner;
 
 public class P10PadawanEquipment {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        double budget = Double.parseDouble(scanner.nextLine());
-        int studentsCount = Integer.parseInt(scanner.nextLine());
-        double priceLight = Double.parseDouble(scanner.nextLine());
-        double priceRobe = Double.parseDouble(scanner.nextLine());
-        double priceBelt = Double.parseDouble(scanner.nextLine());
+         Scanner scanner = new Scanner(System.in);
+        double amountOfMoney = Double.parseDouble(scanner.nextLine());
+        double countOfStudents = Double.parseDouble(scanner.nextLine());
+        double priceLightSabers = Double.parseDouble(scanner.nextLine());
+        double priceRobes = Double.parseDouble(scanner.nextLine());
+        double priceBelts = Double.parseDouble(scanner.nextLine());
+        double lightSabers10percent = Math.ceil(countOfStudents * 0.10);
+        double priceEquipment = 0;
 
-        double sumLight = Math.ceil(studentsCount + 0.10 * studentsCount) * priceLight; //1.1 * studentsCount
-        double sumRobes = studentsCount * priceRobe;
-        double sumBelts = (studentsCount - studentsCount / 6) * priceBelt;
-
-        double totalSum = sumLight + sumRobes + sumBelts; //крайната сума за плащане
-
-        if(totalSum <= budget) {
-            System.out.printf("The money is enough - it would cost %.2flv.", totalSum);
-        } else {
-            double needMoney = totalSum - budget;
-            System.out.printf("Ivan Cho will need %.2flv more.", needMoney);
+        for (int students = 1; students <= countOfStudents; students++) {
+            priceEquipment += priceLightSabers;
+            priceEquipment += priceRobes;
+            if (students % 6 == 0) {
+                continue;
+            }
+            priceEquipment += priceBelts;
         }
-
-
+        double finalPrice = priceEquipment + (lightSabers10percent * priceLightSabers);
+        if (finalPrice <= amountOfMoney) {
+            System.out.printf("The money is enough - it would cost %.2flv.", finalPrice);
+        } else {
+            System.out.printf("George Lucas will need %.2flv more.", finalPrice - amountOfMoney);
+        }
     }
 }
